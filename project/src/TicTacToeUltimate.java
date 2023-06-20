@@ -87,6 +87,7 @@ public class TicTacToeUltimate extends gameWindow{
             ) {
                 xWins(2, 4, 6);
             }
+
             /* O win condition */
             if (
                     (buttons[0].getText().equals("O")) &&
@@ -144,6 +145,7 @@ public class TicTacToeUltimate extends gameWindow{
             ) {
                 oWins(2, 4, 6);
             }
+
         }
 
         public void xWins ( int a, int b, int c){
