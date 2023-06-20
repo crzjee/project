@@ -6,7 +6,7 @@ import javax.swing.*;
 
 
 public class TicTacToeUltimate implements ActionListener{
-    final String instructions = "Instrukcje: \n\n";
+
     boolean playerX_turn;
     Random random = new Random();
 
@@ -18,12 +18,7 @@ public class TicTacToeUltimate implements ActionListener{
     JLabel textfield = new JLabel();
     JButton[] buttons = new JButton[9];
 
-    /** Instrukcje */
-    JButton instButton = new JButton("Instrukcje");
-    JFrame instWindow = new JFrame("Instrukcje");
-    JTextArea instText = new JTextArea(instructions);
-    JScrollPane instPane = new JScrollPane(instText);
-    JPanel instPanel = new JPanel();
+
 
 
 
@@ -43,20 +38,6 @@ public class TicTacToeUltimate implements ActionListener{
         textfield.setText("Ultimate Tic Tac Toe");
         textfield.setOpaque(true);
 
-        instWindow.setSize(300,250);
-        instText.setFont(new Font("Sans-Serif", Font.BOLD, 14));
-        instText.setLineWrap(true);
-        instText.setWrapStyleWord(true);
-        instText.setEditable(false);
-        instPane.setPreferredSize(new Dimension(500, 300));
-        instPanel.add(instPane);
-        instWindow.setResizable(false);
-        instWindow.add(instPanel);
-        instWindow.pack();
-        instButton.setActionCommand("Instrukcje");
-        instButton.addActionListener(this);
-
-        optPanel.add(instButton);
 
         titlePanel.setLayout(new BorderLayout());
         titlePanel.setBounds(0, 0, 600, 50);
@@ -110,9 +91,6 @@ public class TicTacToeUltimate implements ActionListener{
                 }
             }
         }
-        if(e.getActionCommand().equals("Instrukcje")){
-            instWindow.setVisible(true);
-        }
     }
 
         public void firstTurn () {
@@ -133,7 +111,7 @@ public class TicTacToeUltimate implements ActionListener{
         }
 
         public void check () {
-            /** X win condition */
+            /* X win condition */
             if (
                     (buttons[0].getText().equals("X")) &&
                             (buttons[1].getText().equals("X")) &&
@@ -190,7 +168,7 @@ public class TicTacToeUltimate implements ActionListener{
             ) {
                 xWins(2, 4, 6);
             }
-            /** O win condition */
+            /* O win condition */
             if (
                     (buttons[0].getText().equals("O")) &&
                             (buttons[1].getText().equals("O")) &&
