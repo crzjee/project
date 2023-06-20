@@ -15,6 +15,9 @@ public abstract class gameWindow implements ActionListener{
     JLabel textfield = new JLabel();
     JButton[] buttons = new JButton[9];
 
+    /** Przyciski */
+
+
 
     gameWindow() {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
