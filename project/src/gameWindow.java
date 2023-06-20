@@ -17,12 +17,15 @@ public abstract class gameWindow implements ActionListener{
 
     /** Zdjęcia przycisków */
 
+    ImageIcon xImg = new ImageIcon("project/images/xImage.png");
+    ImageIcon oImg = new ImageIcon("project/images/oImage.png");
+
 
 
     gameWindow() {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setSize(600, 600);
-        window.getContentPane().setBackground(new Color(250, 250, 0));
+        window.getContentPane().setBackground(new Color(21,27,31));
         window.setLayout(new BorderLayout());
         window.add(optPanel, BorderLayout.SOUTH);
         window.setVisible(true);
@@ -39,17 +42,19 @@ public abstract class gameWindow implements ActionListener{
         titlePanel.setBounds(0, 0, 600, 50);
 
         buttonPanel.setLayout(new GridLayout(3, 3));
-        buttonPanel.setBackground(new Color(0, 245, 0));
+        buttonPanel.setBackground(new Color(21,27,31));
+
 
         JPanel mainPanel = new JPanel();
         mainPanel.setBackground(new Color(21,27,31));
         mainPanel.setLayout(new GridLayout(3,3,10,10));
+
         for(int i=0;i< 9;i++){
             window.add(mainPanel, BorderLayout.CENTER);
-            for( i=0; i<9; i++){
+            for(i=0; i<9; i++){
                 buttons[i] = new JButton();
                 mainPanel.add(buttons[i]);
-                buttons[i].setBackground(new Color(0,0,0));
+                buttons[i].setBackground(new Color(21,27,31));
                 buttons[i].setFont(new Font("Sans Serif", Font.BOLD, 30));
                 buttons[i].setFocusable(false);
                 buttons[i].addActionListener(this);
