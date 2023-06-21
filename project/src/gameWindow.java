@@ -5,6 +5,7 @@ import java.util.Random;
 
 public abstract class gameWindow implements ActionListener{
     boolean playerX_turn;
+
     Random random = new Random();
 
     /** Plansza */
@@ -17,8 +18,9 @@ public abstract class gameWindow implements ActionListener{
 
     /** Zdjęcia przycisków */
 
-    ImageIcon xImg = new ImageIcon("project/images/xImage.png");
+    ImageIcon xImg = new ImageIcon("project/images/xImage.png" );
     ImageIcon oImg = new ImageIcon("project/images/oImage.png");
+
 
 
 
@@ -66,6 +68,21 @@ public abstract class gameWindow implements ActionListener{
 
 
         firstTurn();
+    }
+    public void startNewGame(int a, int b, int c){
+        for (int i=0; i<9; i++){
+            buttons[i].setEnabled(true);
+            buttons[i].setText("");
+            buttons[a].setBackground(new Color(21,27,31));
+            buttons[b].setBackground(new Color(21,27,31));
+            buttons[c].setBackground(new Color(21,27,31));
+        }
+    }
+    public void startNew(){
+        buttons[1] = new JButton();
+        optPanel.add(buttons[1]);
+        buttons[1].setText("Zacznij od nowa");
+//        startNewGame(a,b,c);
     }
     public void firstTurn () {
 

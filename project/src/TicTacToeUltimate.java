@@ -10,7 +10,8 @@ public class TicTacToeUltimate extends gameWindow{
                 if (playerX_turn) {
                     if (buttons[i].getText().equals("")) {
                         buttons[i].setForeground(new Color(255, 255, 255));
-                        buttons[i].setIcon(xImg);
+                        buttons[i].setText("X");
+//                        buttons[i].setIcon(xImg);
                         playerX_turn = false;
                         textfield.setText("Ruch kółka");
                         check();
@@ -18,7 +19,8 @@ public class TicTacToeUltimate extends gameWindow{
                 } else {
                     if (buttons[i].getText().equals("")) {
                         buttons[i].setForeground(new Color(255, 255, 255));
-                        buttons[i].setIcon(oImg);
+                        buttons[i].setText("O");
+//                        buttons[i].setIcon(oImg);
                         playerX_turn = true;
                         textfield.setText("Ruch krzyżyka");
                         check();
@@ -32,116 +34,116 @@ public class TicTacToeUltimate extends gameWindow{
         public void check () {
             /* X win condition */
             if (
-                    (buttons[0].getIcon().equals(xImg)) &&
-                            (buttons[1].getIcon().equals(xImg)) &&
-                            (buttons[2].getIcon().equals(xImg))
+                    (buttons[0].getText().equals("X")) &&
+                            (buttons[1].getText().equals("X")) &&
+                            (buttons[2].getText().equals("X"))
             ) {
                 xWins(0, 1, 2);
             }
             if (
-                    (buttons[3].getIcon().equals(xImg)) &&
-                            (buttons[4].getIcon().equals(xImg)) &&
-                            (buttons[5].getIcon().equals(xImg))
+                    (buttons[3].getText().equals("X")) &&
+                            (buttons[4].getText().equals("X")) &&
+                            (buttons[5].getText().equals("X"))
             ) {
                 xWins(3, 4, 5);
             }
             if (
-                    (buttons[6].getIcon().equals(xImg)) &&
-                            (buttons[7].getIcon().equals(xImg)) &&
-                            (buttons[8].getIcon().equals(xImg))
+                    (buttons[6].getText().equals("X")) &&
+                            (buttons[7].getText().equals("X")) &&
+                            (buttons[8].getText().equals("X"))
             ) {
                 xWins(6, 7, 8);
             }
             if (
-                    (buttons[0].getIcon().equals(xImg)) &&
-                            (buttons[3].getIcon().equals(xImg)) &&
-                            (buttons[6].getIcon().equals(xImg))
+                    (buttons[0].getText().equals("X")) &&
+                            (buttons[3].getText().equals("X")) &&
+                            (buttons[6].getText().equals("X"))
             ) {
                 xWins(0, 3, 6);
             }
             if (
-                    (buttons[1].getIcon().equals(xImg)) &&
-                            (buttons[4].getIcon().equals(xImg)) &&
-                            (buttons[7].getIcon().equals(xImg))
+                    (buttons[1].getText().equals("X")) &&
+                            (buttons[4].getText().equals("X")) &&
+                            (buttons[7].getText().equals("X"))
             ) {
                 xWins(1, 4, 7);
             }
             if (
-                    (buttons[2].getIcon().equals(xImg)) &&
-                            (buttons[5].getIcon().equals(xImg)) &&
-                            (buttons[8].getIcon().equals(xImg))
+                    (buttons[2].getText().equals("X")) &&
+                            (buttons[5].getText().equals("X")) &&
+                            (buttons[8].getText().equals("X"))
             ) {
                 xWins(2, 5, 8);
             }
             if (
-                    (buttons[0].getIcon().equals(xImg)) &&
-                            (buttons[4].getIcon().equals(xImg)) &&
-                            (buttons[8].getIcon().equals(xImg))
+                    (buttons[0].getText().equals("X")) &&
+                            (buttons[4].getText().equals("X")) &&
+                            (buttons[8].getText().equals("X"))
             ) {
                 xWins(0, 4, 8);
             }
             if (
-                    (buttons[2].getIcon().equals(xImg)) &&
-                            (buttons[4].getIcon().equals(xImg)) &&
-                            (buttons[6].getIcon().equals(xImg))
+                    (buttons[2].getText().equals("X")) &&
+                            (buttons[4].getText().equals("X")) &&
+                            (buttons[6].getText().equals("X"))
             ) {
                 xWins(2, 4, 6);
             }
 
             /* O win condition */
             if (
-                    (buttons[0].getIcon().equals(oImg)) &&
-                            (buttons[1].getIcon().equals(oImg)) &&
-                            (buttons[2].getIcon().equals(oImg))
+                    (buttons[0].getText().equals("O")) &&
+                            (buttons[1].getText().equals("O")) &&
+                            (buttons[2].getText().equals("O"))
             ) {
                 oWins(0, 1, 2);
             }
             if (
-                    (buttons[3].getIcon().equals(oImg)) &&
-                            (buttons[4].getIcon().equals(oImg)) &&
-                            (buttons[5].getIcon().equals(oImg))
+                    (buttons[3].getText().equals("O")) &&
+                            (buttons[4].getText().equals("O")) &&
+                            (buttons[5].getText().equals("O"))
             ) {
                 oWins(3, 4, 5);
             }
             if (
-                    (buttons[6].getIcon().equals(oImg)) &&
-                            (buttons[7].getIcon().equals(oImg)) &&
-                            (buttons[8].getIcon().equals(oImg))
+                    (buttons[6].getText().equals("O")) &&
+                            (buttons[7].getText().equals("O")) &&
+                            (buttons[8].getText().equals("O"))
             ) {
                 oWins(6, 7, 8);
             }
             if (
-                    (buttons[0].getIcon().equals(oImg)) &&
-                            (buttons[3].getIcon().equals(oImg)) &&
-                            (buttons[6].getIcon().equals(oImg))
+                    (buttons[0].getText().equals("O")) &&
+                            (buttons[3].getText().equals("O")) &&
+                            (buttons[6].getText().equals("O"))
             ) {
                 oWins(0, 3, 6);
             }
             if (
-                    (buttons[1].getIcon().equals(oImg)) &&
-                            (buttons[4].getIcon().equals(oImg)) &&
-                            (buttons[7].getIcon().equals(oImg))
+                    (buttons[1].getText().equals("O")) &&
+                            (buttons[4].getText().equals("O")) &&
+                            (buttons[7].getText().equals("O"))
             ) {
                 oWins(1, 4, 7);
             }
             if (
-                    (buttons[2].getIcon().equals(oImg)) &&
-                            (buttons[5].getIcon().equals(oImg)) &&
-                            (buttons[8].getIcon().equals(oImg))
+                    (buttons[2].getText().equals("O")) &&
+                            (buttons[5].getText().equals("O")) &&
+                            (buttons[8].getText().equals("O"))
             ) {
                 oWins(2, 5, 8);
             }
             if (
-                    (buttons[0].getIcon().equals(oImg)) &&
-                            (buttons[4].getIcon().equals(oImg)) &&
-                            (buttons[8].getIcon().equals(oImg))
+                    (buttons[0].getText().equals("O")) &&
+                            (buttons[4].getText().equals("O")) &&
+                            (buttons[8].getText().equals("O"))
             ) {
                 oWins(0, 4, 8);
             }
             if (
-                    (buttons[2].getIcon().equals(oImg)) &&
-                            (buttons[4].getIcon().equals(oImg)) &&
-                            (buttons[6].getIcon().equals(oImg))
+                    (buttons[2].getText().equals("O")) &&
+                            (buttons[4].getText().equals("O")) &&
+                            (buttons[6].getText().equals("O"))
             ) {
                 oWins(2, 4, 6);
             }
@@ -157,6 +159,7 @@ public class TicTacToeUltimate extends gameWindow{
                 buttons[i].setEnabled(false);
             }
             textfield.setText("Krzyzyk wygrywa");
+            startNew();
         }
 
         public void oWins ( int a, int b, int c){
@@ -168,6 +171,16 @@ public class TicTacToeUltimate extends gameWindow{
                 buttons[i].setEnabled(false);
             }
             textfield.setText("Kółko wygrywa");
+            startNew();
+        }
+        public void startNewGame(int a, int b, int c){
+            for (int i=0; i<9; i++){
+                buttons[i].setEnabled(true);
+                buttons[i].setText("");
+                buttons[a].setBackground(new Color(21,27,31));
+                buttons[b].setBackground(new Color(21,27,31));
+                buttons[c].setBackground(new Color(21,27,31));
+            }
         }
 
 }
