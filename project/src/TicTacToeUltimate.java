@@ -5,9 +5,11 @@ import java.awt.event.ActionListener;
 import java.util.Random;
 
 
+
 public class TicTacToeUltimate extends gameWindow implements ActionListener {
     private int currentPlayer;
     private final JLabel titleLabel;
+
     public TicTacToeUltimate() {
         titleLabel = new JLabel("Witaj w Tic Tac Toe Ultimate!");
         titleLabel.setFont(new Font("Arial",Font.BOLD,20));
@@ -17,6 +19,7 @@ public class TicTacToeUltimate extends gameWindow implements ActionListener {
         titleLabel.setBackground(new Color(21,21,37));
         titleLabel.setForeground(Color.WHITE);
         add(titleLabel, BorderLayout.NORTH);
+
 
         Thread titleUpdateThread = new Thread(() -> {
             try {
@@ -282,7 +285,6 @@ public class TicTacToeUltimate extends gameWindow implements ActionListener {
             System.exit(0);
         }
     }
-
 
     private void resetGame() {
         Random firstMove = new Random();
