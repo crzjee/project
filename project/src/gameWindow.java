@@ -56,7 +56,6 @@ public abstract class gameWindow extends JFrame implements ActionListener {
         fileMenu.add(loadMenuItem);
 
         setJMenuBar(menuBar);
-
-
     }
+
 }

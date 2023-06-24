@@ -23,7 +23,9 @@ public class TicTacToeUltimate extends gameWindow implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         JButton button = (JButton) e.getSource();
 
-        if (isBoardEnabled && button.getBackground() == Color.WHITE) {
+        if (isBoardEnabled && button.getBackground() == Color.WHITE && button.isEnabled()) {
+            resetSmallBoardsBackground();
+
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 3; j++) {
                     for (int k = 0; k < 3; k++) {
@@ -33,9 +35,10 @@ public class TicTacToeUltimate extends gameWindow implements ActionListener {
                                     smallBoards[i][j][k][l].setText(getPlayerSymbol());
                                     smallBoards[i][j][k][l].setBackground(Color.LIGHT_GRAY);
                                     checkWin(i, j, k, l);
-                                    if (mainBoard[k][l].getBackground() == Color.WHITE) {
-                                        mainBoard[k][l].setBackground(Color.YELLOW);
-                                    }
+
+                                    // Highlight the selected small board with yellow color
+                                    mainBoard[k][l].setBackground(Color.YELLOW);
+
                                     currentPlayer = 3 - currentPlayer; // Switch currentPlayer between 1 and 2
                                     break;
                                 }
@@ -46,58 +49,107 @@ public class TicTacToeUltimate extends gameWindow implements ActionListener {
             }
         }
     }
+
+    private void resetSmallBoardsBackground() {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                mainBoard[i][j].setBackground(Color.WHITE);
+            }
+        }
+    }
     private String getPlayerSymbol() {
         return currentPlayer == 1 ? "X" : "O";
     }
 
 
     private void checkWin(int mainRow, int mainCol, int subRow, int subCol) {
-        // Wiersze
+        String currentPlayerSymbol = getPlayerSymbol();
+
+        // Check rows
+        boolean rowWin = true;
         for (int row = 0; row < 3; row++) {
-            if (smallBoards[mainRow][mainCol][row][subCol].getText().equals("")) {
+            if (smallBoards[mainRow][mainCol][row][subCol].getText().equals("")
+                    || !smallBoards[mainRow][mainCol][row][subCol].getText().equals(currentPlayerSymbol)) {
+                rowWin = false;
                 break;
-            }
-            if (smallBoards[mainRow][mainCol][row][subCol].getText().equals(smallBoards[mainRow][mainCol][0][subCol].getText()) && row == 2) {
-                mainBoard[mainRow][mainCol].setText(getPlayerSymbol());
-                mainBoard[mainRow][mainCol].setBackground(Color.GREEN);
-                checkBoardWin();
-                return;
             }
         }
 
-        // Kolumny
-        for (int col = 0; col < 3; col++) {
-            if (smallBoards[mainRow][mainCol][subRow][col].getText().equals("")) {
-                break;
-            }
-            if (smallBoards[mainRow][mainCol][subRow][col].getText().equals(smallBoards[mainRow][mainCol][subRow][0].getText()) && col == 2) {
-                mainBoard[mainRow][mainCol].setText(getPlayerSymbol());
-                mainBoard[mainRow][mainCol].setBackground(Color.GREEN);
-                checkBoardWin();
-                return;
-            }
-        }
-
-        // Diagonal "/"
-        if (!smallBoards[mainRow][mainCol][0][0].getText().equals("") && smallBoards[mainRow][mainCol][0][0].getText().equals(smallBoards[mainRow][mainCol][1][1].getText())
-                && smallBoards[mainRow][mainCol][0][0].getText().equals(smallBoards[mainRow][mainCol][2][2].getText())) {
-            mainBoard[mainRow][mainCol].setText(getPlayerSymbol());
+        if (rowWin) {
+            mainBoard[mainRow][mainCol].setText(currentPlayerSymbol);
             mainBoard[mainRow][mainCol].setBackground(Color.GREEN);
+            swapSmallBoard(mainRow, mainCol, currentPlayerSymbol);
             checkBoardWin();
             return;
         }
 
-        // Diagonal "\"
-        if (!smallBoards[mainRow][mainCol][0][2].getText().equals("") && smallBoards[mainRow][mainCol][0][2].getText().equals(smallBoards[mainRow][mainCol][1][1].getText())
-                && smallBoards[mainRow][mainCol][0][2].getText().equals(smallBoards[mainRow][mainCol][2][0].getText())) {
-            mainBoard[mainRow][mainCol].setText(getPlayerSymbol());
+        // Check columns
+        boolean colWin = true;
+        for (int col = 0; col < 3; col++) {
+            if (smallBoards[mainRow][mainCol][subRow][col].getText().equals("")
+                    || !smallBoards[mainRow][mainCol][subRow][col].getText().equals(currentPlayerSymbol)) {
+                colWin = false;
+                break;
+            }
+        }
+
+        if (colWin) {
+            mainBoard[mainRow][mainCol].setText(currentPlayerSymbol);
             mainBoard[mainRow][mainCol].setBackground(Color.GREEN);
+            swapSmallBoard(mainRow, mainCol, currentPlayerSymbol);
+            checkBoardWin();
+            return;
+        }
+
+        // Check diagonal
+        boolean diagWin = true;
+        for (int i = 0; i < 3; i++) {
+            if (smallBoards[mainRow][mainCol][i][i].getText().equals("")
+                    || !smallBoards[mainRow][mainCol][i][i].getText().equals(currentPlayerSymbol)) {
+                diagWin = false;
+                break;
+            }
+        }
+
+        if (diagWin) {
+            mainBoard[mainRow][mainCol].setText(currentPlayerSymbol);
+            mainBoard[mainRow][mainCol].setBackground(Color.GREEN);
+            swapSmallBoard(mainRow, mainCol, currentPlayerSymbol);
+            checkBoardWin();
+            return;
+        }
+
+        // Check reverse diagonal
+        boolean revDiagWin = true;
+        for (int i = 0; i < 3; i++) {
+            if (smallBoards[mainRow][mainCol][i][2 - i].getText().equals("")
+                    || !smallBoards[mainRow][mainCol][i][2 - i].getText().equals(currentPlayerSymbol)) {
+                revDiagWin = false;
+                break;
+            }
+        }
+
+        if (revDiagWin) {
+            mainBoard[mainRow][mainCol].setText(currentPlayerSymbol);
+            mainBoard[mainRow][mainCol].setBackground(Color.GREEN);
+            swapSmallBoard(mainRow, mainCol, currentPlayerSymbol);
             checkBoardWin();
         }
     }
 
+    private void swapSmallBoard(int mainRow, int mainCol, String playerSymbol) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (!smallBoards[mainRow][mainCol][i][j].getText().equals(playerSymbol)) {
+                    smallBoards[mainRow][mainCol][i][j].setText(playerSymbol);
+                    smallBoards[mainRow][mainCol][i][j].setBackground(Color.LIGHT_GRAY);
+                }
+            }
+        }
+    }
+
     private void checkBoardWin() {
-        // Wiersze
+        // Check rows
         for (int i = 0; i < 3; i++) {
             if (mainBoard[i][0].getText().equals("")) {
                 continue;
@@ -110,7 +162,7 @@ public class TicTacToeUltimate extends gameWindow implements ActionListener {
             }
         }
 
-        // Kolumny
+        // Check columns
         for (int j = 0; j < 3; j++) {
             if (mainBoard[0][j].getText().equals("")) {
                 continue;
@@ -123,7 +175,7 @@ public class TicTacToeUltimate extends gameWindow implements ActionListener {
             }
         }
 
-        // Diagonal "/"
+        // Check diagonal
         if (!mainBoard[0][0].getText().equals("") && mainBoard[0][0].getText().equals(mainBoard[1][1].getText())
                 && mainBoard[0][0].getText().equals(mainBoard[2][2].getText())) {
             highlightWinningCells(0, 0, 1, 1, 2, 2);
@@ -131,19 +183,25 @@ public class TicTacToeUltimate extends gameWindow implements ActionListener {
             return;
         }
 
-        // Diagonal "\"
+        // Check reverse diagonal
         if (!mainBoard[0][2].getText().equals("") && mainBoard[0][2].getText().equals(mainBoard[1][1].getText())
                 && mainBoard[0][2].getText().equals(mainBoard[2][0].getText())) {
             highlightWinningCells(0, 2, 1, 1, 2, 0);
             winnerDialogue(mainBoard[0][2].getText());
+            return;
         }
 
         boolean isDraw = true;
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (mainBoard[i][j].getIcon() == null) {
-                    isDraw = false;
-                    break;
+        outerLoop:
+        for (int mainRow = 0; mainRow < 3; mainRow++) {
+            for (int mainCol = 0; mainCol < 3; mainCol++) {
+                for (int subRow = 0; subRow < 3; subRow++) {
+                    for (int subCol = 0; subCol < 3; subCol++) {
+                        if (smallBoards[mainRow][mainCol][subRow][subCol].getText().equals("")) {
+                            isDraw = false;
+                            break outerLoop;
+                        }
+                    }
                 }
             }
         }
@@ -154,9 +212,24 @@ public class TicTacToeUltimate extends gameWindow implements ActionListener {
     }
 
     private void highlightWinningCells(int i1, int j1, int i2, int j2, int i3, int j3) {
-        mainBoard[i1][j1].setBackground(Color.GREEN);
-        mainBoard[i2][j2].setBackground(Color.GREEN);
-        mainBoard[i3][j3].setBackground(Color.GREEN);
+        Color originalColor = mainBoard[i1][j1].getBackground();
+
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (i == i1 && j == j1) {
+                    continue;
+                }
+                if (i == i2 && j == j2) {
+                    continue;
+                }
+                if (i == i3 && j == j3) {
+                    continue;
+                }
+                mainBoard[i][j].setBackground(originalColor);
+                mainBoard[i][j].setEnabled(false); // Disable the small board
+            }
+        }
+
         isBoardEnabled = false;
     }
 
@@ -178,20 +251,31 @@ public class TicTacToeUltimate extends gameWindow implements ActionListener {
         }
     }
 
+
     private void resetGame() {
+        currentPlayer = 1;
+
+        // Reset main board
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 mainBoard[i][j].setText("");
                 mainBoard[i][j].setBackground(Color.WHITE);
+            }
+        }
+
+        // Reset small boards
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
                 for (int k = 0; k < 3; k++) {
                     for (int l = 0; l < 3; l++) {
                         smallBoards[i][j][k][l].setText("");
                         smallBoards[i][j][k][l].setBackground(Color.WHITE);
+                        smallBoards[i][j][k][l].setEnabled(true);
                     }
                 }
             }
         }
-        activePlayer = 1;
+
         isBoardEnabled = true;
     }
 
