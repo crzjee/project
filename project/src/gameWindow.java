@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-
 public abstract class gameWindow extends JFrame implements ActionListener {
 
     public JButton[][] mainBoard;
@@ -16,7 +15,7 @@ public abstract class gameWindow extends JFrame implements ActionListener {
         setTitle("Ultimate Tic Tac Toe");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 600);
-        setLayout(new GridLayout(3, 3));
+        setLayout(new BorderLayout());
         setVisible(true);
 
         mainBoard = new JButton[3][3];
@@ -24,12 +23,14 @@ public abstract class gameWindow extends JFrame implements ActionListener {
         activePlayer = 1;
         isBoardEnabled = true;
 
+        JPanel mainPanel = new JPanel(new GridLayout(3, 3));
+
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 mainBoard[i][j] = new JButton();
                 mainBoard[i][j].setBackground(Color.WHITE);
                 mainBoard[i][j].addActionListener(this);
-                add(mainBoard[i][j]);
+                mainPanel.add(mainBoard[i][j]);
 
                 for (int k = 0; k < 3; k++) {
                     for (int l = 0; l < 3; l++) {
@@ -42,6 +43,13 @@ public abstract class gameWindow extends JFrame implements ActionListener {
                 }
             }
         }
+
+
+        Box box = Box.createVerticalBox();
+        box.add(Box.createVerticalGlue());
+        box.add(mainPanel);
+
+        add(box, BorderLayout.CENTER);
 
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu("Zapisz/załaduj");
@@ -57,5 +65,4 @@ public abstract class gameWindow extends JFrame implements ActionListener {
 
         setJMenuBar(menuBar);
     }
-
 }

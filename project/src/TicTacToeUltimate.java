@@ -7,7 +7,34 @@ import java.awt.event.ActionListener;
 
 public class TicTacToeUltimate extends gameWindow implements ActionListener {
     private int currentPlayer;
+    private final JLabel titleLabel;
     public TicTacToeUltimate() {
+        titleLabel = new JLabel("Witaj w Tic Tac Toe Ultimate!");
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Arial",Font.BOLD,20));
+        add(titleLabel, BorderLayout.NORTH);
+
+        Thread titleUpdateThread = new Thread(() -> {
+            try {
+                Thread.sleep(1234);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            while (true) {
+                String playerSymbol = getPlayerSymbol();
+                String title = "Ruch gracza " + playerSymbol;
+                titleLabel.setText(title);
+
+                try {
+                    Thread.sleep(789);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        titleUpdateThread.start();
+
         currentPlayer = 1;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -36,10 +63,9 @@ public class TicTacToeUltimate extends gameWindow implements ActionListener {
                                     smallBoards[i][j][k][l].setBackground(Color.LIGHT_GRAY);
                                     checkWin(i, j, k, l);
 
-                                    // Highlight the selected small board with yellow color
                                     mainBoard[k][l].setBackground(Color.YELLOW);
 
-                                    currentPlayer = 3 - currentPlayer; // Switch currentPlayer between 1 and 2
+                                    currentPlayer = 3 - currentPlayer;
                                     break;
                                 }
                             }
