@@ -1,9 +1,24 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 
-public class TicTacToeUltimate extends gameWindow{
+
+public class TicTacToeUltimate extends gameWindow implements ActionListener {
+    private int currentPlayer;
+    public TicTacToeUltimate() {
+        currentPlayer = 1;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                for (int k = 0; k < 3; k++) {
+                    for (int l = 0; l < 3; l++) {
+                        smallBoards[i][j][k][l].addActionListener(this);
+                    }
+                }
+            }
+        }
+    }
 
     public void actionPerformed(ActionEvent e) {
         JButton button = (JButton) e.getSource();
@@ -21,7 +36,7 @@ public class TicTacToeUltimate extends gameWindow{
                                     if (mainBoard[k][l].getBackground() == Color.WHITE) {
                                         mainBoard[k][l].setBackground(Color.YELLOW);
                                     }
-                                    setActivePlayer(k, l);
+                                    currentPlayer = 3 - currentPlayer; // Switch currentPlayer between 1 and 2
                                     break;
                                 }
                             }
@@ -32,15 +47,12 @@ public class TicTacToeUltimate extends gameWindow{
         }
     }
     private String getPlayerSymbol() {
-        return activePlayer == 1 ? "X" : "O";
+        return currentPlayer == 1 ? "X" : "O";
     }
 
-    private void setActivePlayer(int boardRow, int boardCol) {
-        activePlayer = (boardRow * 3 + boardCol) + 1;
-    }
 
     private void checkWin(int mainRow, int mainCol, int subRow, int subCol) {
-        // Check rows
+        // Wiersze
         for (int row = 0; row < 3; row++) {
             if (smallBoards[mainRow][mainCol][row][subCol].getText().equals("")) {
                 break;
@@ -53,7 +65,7 @@ public class TicTacToeUltimate extends gameWindow{
             }
         }
 
-        // Check columns
+        // Kolumny
         for (int col = 0; col < 3; col++) {
             if (smallBoards[mainRow][mainCol][subRow][col].getText().equals("")) {
                 break;
@@ -66,7 +78,7 @@ public class TicTacToeUltimate extends gameWindow{
             }
         }
 
-        // Check diagonal
+        // Diagonal "/"
         if (!smallBoards[mainRow][mainCol][0][0].getText().equals("") && smallBoards[mainRow][mainCol][0][0].getText().equals(smallBoards[mainRow][mainCol][1][1].getText())
                 && smallBoards[mainRow][mainCol][0][0].getText().equals(smallBoards[mainRow][mainCol][2][2].getText())) {
             mainBoard[mainRow][mainCol].setText(getPlayerSymbol());
@@ -75,7 +87,7 @@ public class TicTacToeUltimate extends gameWindow{
             return;
         }
 
-        // Check reverse diagonal
+        // Diagonal "\"
         if (!smallBoards[mainRow][mainCol][0][2].getText().equals("") && smallBoards[mainRow][mainCol][0][2].getText().equals(smallBoards[mainRow][mainCol][1][1].getText())
                 && smallBoards[mainRow][mainCol][0][2].getText().equals(smallBoards[mainRow][mainCol][2][0].getText())) {
             mainBoard[mainRow][mainCol].setText(getPlayerSymbol());
@@ -85,7 +97,7 @@ public class TicTacToeUltimate extends gameWindow{
     }
 
     private void checkBoardWin() {
-        // Check rows
+        // Wiersze
         for (int i = 0; i < 3; i++) {
             if (mainBoard[i][0].getText().equals("")) {
                 continue;
@@ -93,12 +105,12 @@ public class TicTacToeUltimate extends gameWindow{
             if (mainBoard[i][0].getText().equals(mainBoard[i][1].getText()) &&
                     mainBoard[i][0].getText().equals(mainBoard[i][2].getText())) {
                 highlightWinningCells(i, 0, i, 1, i, 2);
-                showWinnerDialog(mainBoard[i][0].getText());
+                winnerDialogue(mainBoard[i][0].getText());
                 return;
             }
         }
 
-        // Check columns
+        // Kolumny
         for (int j = 0; j < 3; j++) {
             if (mainBoard[0][j].getText().equals("")) {
                 continue;
@@ -106,24 +118,38 @@ public class TicTacToeUltimate extends gameWindow{
             if (mainBoard[0][j].getText().equals(mainBoard[1][j].getText()) &&
                     mainBoard[0][j].getText().equals(mainBoard[2][j].getText())) {
                 highlightWinningCells(0, j, 1, j, 2, j);
-                showWinnerDialog(mainBoard[0][j].getText());
+                winnerDialogue(mainBoard[0][j].getText());
                 return;
             }
         }
 
-        // Check diagonal
+        // Diagonal "/"
         if (!mainBoard[0][0].getText().equals("") && mainBoard[0][0].getText().equals(mainBoard[1][1].getText())
                 && mainBoard[0][0].getText().equals(mainBoard[2][2].getText())) {
             highlightWinningCells(0, 0, 1, 1, 2, 2);
-            showWinnerDialog(mainBoard[0][0].getText());
+            winnerDialogue(mainBoard[0][0].getText());
             return;
         }
 
-        // Check reverse diagonal
+        // Diagonal "\"
         if (!mainBoard[0][2].getText().equals("") && mainBoard[0][2].getText().equals(mainBoard[1][1].getText())
                 && mainBoard[0][2].getText().equals(mainBoard[2][0].getText())) {
             highlightWinningCells(0, 2, 1, 1, 2, 0);
-            showWinnerDialog(mainBoard[0][2].getText());
+            winnerDialogue(mainBoard[0][2].getText());
+        }
+
+        boolean isDraw = true;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (mainBoard[i][j].getIcon() == null) {
+                    isDraw = false;
+                    break;
+                }
+            }
+        }
+
+        if (isDraw) {
+            drawDialogue();
         }
     }
 
@@ -134,9 +160,22 @@ public class TicTacToeUltimate extends gameWindow{
         isBoardEnabled = false;
     }
 
-    private void showWinnerDialog(String winner) {
-        JOptionPane.showMessageDialog(this, "Gracz " + winner + " wygrywa!", "Koniec gry", JOptionPane.INFORMATION_MESSAGE);
-        resetGame();
+    private void winnerDialogue(String winner) {
+        int option = JOptionPane.showOptionDialog(this, "Gracz " + winner + " wygrywa! Czy chcesz zagrać jeszcze raz?", "Koniec gry", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+        if (option == JOptionPane.YES_OPTION) {
+            resetGame();
+        } else {
+            System.exit(0);
+        }
+    }
+
+    private void drawDialogue() {
+        int option = JOptionPane.showOptionDialog(this, "Remis! Czy chcesz zagrać jeszcze raz?", "Koniec gry", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+        if (option == JOptionPane.YES_OPTION) {
+            resetGame();
+        } else {
+            System.exit(0);
+        }
     }
 
     private void resetGame() {

@@ -2,18 +2,22 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+
 public abstract class gameWindow extends JFrame implements ActionListener {
 
-    public final JButton[][] mainBoard;
-    public final JButton[][][][] smallBoards;
+    public JButton[][] mainBoard;
+    public JButton[][][][] smallBoards;
     public int activePlayer;
     public boolean isBoardEnabled;
+    public JMenuItem saveMenuItem;
+    public JMenuItem loadMenuItem;
 
     public gameWindow() {
         setTitle("Ultimate Tic Tac Toe");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 600);
         setLayout(new GridLayout(3, 3));
+        setVisible(true);
 
         mainBoard = new JButton[3][3];
         smallBoards = new JButton[3][3][3][3];
@@ -38,6 +42,21 @@ public abstract class gameWindow extends JFrame implements ActionListener {
                 }
             }
         }
-        setVisible(true);
+
+        JMenuBar menuBar = new JMenuBar();
+        JMenu fileMenu = new JMenu("Zapisz/załaduj");
+        menuBar.add(fileMenu);
+
+        saveMenuItem = new JMenuItem("Zapisz");
+        saveMenuItem.addActionListener(this);
+        fileMenu.add(saveMenuItem);
+
+        loadMenuItem = new JMenuItem("Załaduj");
+        loadMenuItem.addActionListener(this);
+        fileMenu.add(loadMenuItem);
+
+        setJMenuBar(menuBar);
+
+
     }
 }
