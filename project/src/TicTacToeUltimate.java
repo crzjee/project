@@ -8,18 +8,23 @@ import java.util.Random;
 
 public class TicTacToeUltimate extends gameWindow implements ActionListener {
     private int currentPlayer;
-    private final JLabel titleLabel;
+
+
 
     public TicTacToeUltimate() {
-        titleLabel = new JLabel("Witaj w Tic Tac Toe Ultimate!");
-        titleLabel.setFont(new Font("Arial",Font.BOLD,20));
-        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        titleLabel.setVerticalAlignment(SwingConstants.CENTER);
-        titleLabel.setOpaque(true);
-        titleLabel.setBackground(new Color(21,21,37));
-        titleLabel.setForeground(Color.WHITE);
-        add(titleLabel, BorderLayout.NORTH);
 
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                for (int k = 0; k < 3; k++) {
+                    for (int l = 0; l < 3; l++) {
+                        smallBoards[i][j][k][l].addActionListener(this);
+                    }
+                }
+            }
+        }
+
+        Random firstMove = new Random();
+        currentPlayer = firstMove.nextInt(2)+1;
 
         Thread titleUpdateThread = new Thread(() -> {
             try {
@@ -41,19 +46,6 @@ public class TicTacToeUltimate extends gameWindow implements ActionListener {
             }
         });
         titleUpdateThread.start();
-
-        Random firstMove = new Random();
-        currentPlayer = firstMove.nextInt(2)+1;
-
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                for (int k = 0; k < 3; k++) {
-                    for (int l = 0; l < 3; l++) {
-                        smallBoards[i][j][k][l].addActionListener(this);
-                    }
-                }
-            }
-        }
     }
 
     public void actionPerformed(ActionEvent e) {

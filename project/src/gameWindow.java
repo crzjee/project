@@ -10,6 +10,7 @@ public abstract class gameWindow extends JFrame implements ActionListener {
     public boolean isBoardEnabled;
     public JMenuItem saveMenuItem;
     public JMenuItem loadMenuItem;
+    public final JLabel titleLabel;
 
     public gameWindow() {
         setTitle("Ultimate Tic Tac Toe");
@@ -18,10 +19,20 @@ public abstract class gameWindow extends JFrame implements ActionListener {
         setLayout(new BorderLayout());
         setVisible(true);
 
+
         mainBoard = new JButton[3][3];
         smallBoards = new JButton[3][3][3][3];
         activePlayer = 1;
         isBoardEnabled = true;
+
+        titleLabel = new JLabel("Witaj w Tic Tac Toe Ultimate!");
+        titleLabel.setFont(new Font("Arial",Font.BOLD,20));
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        titleLabel.setVerticalAlignment(SwingConstants.CENTER);
+        titleLabel.setOpaque(true);
+        titleLabel.setBackground(new Color(21,21,37));
+        titleLabel.setForeground(Color.WHITE);
+        add(titleLabel, BorderLayout.NORTH);
 
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new GridLayout(3, 3));
