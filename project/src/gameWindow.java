@@ -8,8 +8,8 @@ public abstract class gameWindow extends JFrame implements ActionListener {
     public JButton[][][][] smallBoards;
     public int activePlayer;
     public boolean isBoardEnabled;
-    public JMenuItem saveMenuItem;
-    public JMenuItem loadMenuItem;
+    public JMenuItem saveGame;
+    public JMenuItem loadGame;
     public final JLabel titleLabel;
 
     public gameWindow() {
@@ -72,13 +72,13 @@ public abstract class gameWindow extends JFrame implements ActionListener {
         JMenu fileMenu = new JMenu("Zapisz/załaduj");
         menuBar.add(fileMenu);
 
-        saveMenuItem = new JMenuItem("Zapisz");
-        saveMenuItem.addActionListener(this);
-        fileMenu.add(saveMenuItem);
+        saveGame = new JMenuItem("Zapisz");
+        saveGame.addActionListener(this);
+        fileMenu.add(saveGame);
 
-        loadMenuItem = new JMenuItem("Załaduj");
-        loadMenuItem.addActionListener(this);
-        fileMenu.add(loadMenuItem);
+        loadGame = new JMenuItem("Załaduj");
+        loadGame.addActionListener(this);
+        fileMenu.add(loadGame);
 
         setJMenuBar(menuBar);
     }

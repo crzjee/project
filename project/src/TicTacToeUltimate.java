@@ -9,8 +9,6 @@ import java.util.Random;
 public class TicTacToeUltimate extends gameWindow implements ActionListener {
     private int currentPlayer;
 
-
-
     public TicTacToeUltimate() {
 
         for (int i = 0; i < 3; i++) {
@@ -92,7 +90,7 @@ public class TicTacToeUltimate extends gameWindow implements ActionListener {
     private void checkWin(int mainRow, int mainCol, int subRow, int subCol) {
         String currentPlayerSymbol = getPlayerSymbol();
 
-        // Check rows
+        // Wiersze
         boolean rowWin = true;
         for (int row = 0; row < 3; row++) {
             if (smallBoards[mainRow][mainCol][row][subCol].getText().equals("")
@@ -110,7 +108,7 @@ public class TicTacToeUltimate extends gameWindow implements ActionListener {
             return;
         }
 
-        // Check columns
+        // Kolumny
         boolean colWin = true;
         for (int col = 0; col < 3; col++) {
             if (smallBoards[mainRow][mainCol][subRow][col].getText().equals("")
@@ -128,7 +126,7 @@ public class TicTacToeUltimate extends gameWindow implements ActionListener {
             return;
         }
 
-        // Check diagonal
+        // Diagonal "/"
         boolean diagWin = true;
         for (int i = 0; i < 3; i++) {
             if (smallBoards[mainRow][mainCol][i][i].getText().equals("")
@@ -146,7 +144,7 @@ public class TicTacToeUltimate extends gameWindow implements ActionListener {
             return;
         }
 
-        // Check reverse diagonal
+        // Diagonal "\"
         boolean revDiagWin = true;
         for (int i = 0; i < 3; i++) {
             if (smallBoards[mainRow][mainCol][i][2 - i].getText().equals("")
@@ -253,7 +251,7 @@ public class TicTacToeUltimate extends gameWindow implements ActionListener {
                     continue;
                 }
                 mainBoard[i][j].setBackground(originalColor);
-                mainBoard[i][j].setEnabled(false); // Disable the small board
+                mainBoard[i][j].setEnabled(false);
             }
         }
 
