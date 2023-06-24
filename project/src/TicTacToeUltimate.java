@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.util.Random;
 
 
 public class TicTacToeUltimate extends gameWindow implements ActionListener {
@@ -10,8 +10,12 @@ public class TicTacToeUltimate extends gameWindow implements ActionListener {
     private final JLabel titleLabel;
     public TicTacToeUltimate() {
         titleLabel = new JLabel("Witaj w Tic Tac Toe Ultimate!");
-        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial",Font.BOLD,20));
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        titleLabel.setVerticalAlignment(SwingConstants.CENTER);
+        titleLabel.setOpaque(true);
+        titleLabel.setBackground(new Color(21,21,37));
+        titleLabel.setForeground(Color.WHITE);
         add(titleLabel, BorderLayout.NORTH);
 
         Thread titleUpdateThread = new Thread(() -> {
@@ -35,7 +39,9 @@ public class TicTacToeUltimate extends gameWindow implements ActionListener {
         });
         titleUpdateThread.start();
 
-        currentPlayer = 1;
+        Random firstMove = new Random();
+        currentPlayer = firstMove.nextInt(2)+1;
+
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 for (int k = 0; k < 3; k++) {
@@ -175,7 +181,7 @@ public class TicTacToeUltimate extends gameWindow implements ActionListener {
     }
 
     private void checkBoardWin() {
-        // Check rows
+        // Wiesze
         for (int i = 0; i < 3; i++) {
             if (mainBoard[i][0].getText().equals("")) {
                 continue;
@@ -188,7 +194,7 @@ public class TicTacToeUltimate extends gameWindow implements ActionListener {
             }
         }
 
-        // Check columns
+        // Kolumny
         for (int j = 0; j < 3; j++) {
             if (mainBoard[0][j].getText().equals("")) {
                 continue;
@@ -201,7 +207,7 @@ public class TicTacToeUltimate extends gameWindow implements ActionListener {
             }
         }
 
-        // Check diagonal
+        // Diagonal "/"
         if (!mainBoard[0][0].getText().equals("") && mainBoard[0][0].getText().equals(mainBoard[1][1].getText())
                 && mainBoard[0][0].getText().equals(mainBoard[2][2].getText())) {
             highlightWinningCells(0, 0, 1, 1, 2, 2);
@@ -209,7 +215,7 @@ public class TicTacToeUltimate extends gameWindow implements ActionListener {
             return;
         }
 
-        // Check reverse diagonal
+        // Diagonal "\"
         if (!mainBoard[0][2].getText().equals("") && mainBoard[0][2].getText().equals(mainBoard[1][1].getText())
                 && mainBoard[0][2].getText().equals(mainBoard[2][0].getText())) {
             highlightWinningCells(0, 2, 1, 1, 2, 0);
@@ -279,9 +285,9 @@ public class TicTacToeUltimate extends gameWindow implements ActionListener {
 
 
     private void resetGame() {
-        currentPlayer = 1;
+        Random firstMove = new Random();
+        currentPlayer = firstMove.nextInt(2)+1;
 
-        // Reset main board
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 mainBoard[i][j].setText("");
@@ -289,7 +295,6 @@ public class TicTacToeUltimate extends gameWindow implements ActionListener {
             }
         }
 
-        // Reset small boards
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 for (int k = 0; k < 3; k++) {

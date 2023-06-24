@@ -23,7 +23,13 @@ public abstract class gameWindow extends JFrame implements ActionListener {
         activePlayer = 1;
         isBoardEnabled = true;
 
-        JPanel mainPanel = new JPanel(new GridLayout(3, 3));
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new GridLayout(3, 3));
+        Dimension currentSize = mainPanel.getPreferredSize();
+        int desiredHeight = 500;
+        Dimension newSize = new Dimension(currentSize.width, desiredHeight);
+        mainPanel.setPreferredSize(newSize);
+
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
