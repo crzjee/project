@@ -19,7 +19,6 @@ public abstract class gameWindow extends JFrame implements ActionListener {
         setLayout(new BorderLayout());
         setVisible(true);
 
-
         mainBoard = new JButton[3][3];
         smallBoards = new JButton[3][3][3][3];
         activePlayer = 1;

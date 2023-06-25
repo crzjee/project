@@ -162,15 +162,54 @@ public class TicTacToeUltimate extends gameWindow implements ActionListener {
     }
 
     private void swapSmallBoard(int mainRow, int mainCol, String playerSymbol) {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (!smallBoards[mainRow][mainCol][i][j].getText().equals(playerSymbol)) {
-                    smallBoards[mainRow][mainCol][i][j].setText(playerSymbol);
-                    smallBoards[mainRow][mainCol][i][j].setBackground(Color.LIGHT_GRAY);
+        JButton[][] smallBoard = smallBoards[mainRow][mainCol];
+
+        Thread animationThread = new Thread(() -> {
+            try {
+                if (playerSymbol.equals("X")) {
+                    for (int i = 0; i < 3; i++) {
+                        smallBoard[i][i].setText(playerSymbol);
+                        smallBoard[i][i].setBackground(Color.BLUE);
+                        Thread.sleep(300);
+                    }
+
+                    for (int i = 0; i < 3; i++) {
+                        smallBoard[i][2 - i].setText(playerSymbol);
+                        smallBoard[i][2 - i].setBackground(Color.BLUE);
+                        Thread.sleep(300);
+                    }
+                } else if (playerSymbol.equals("O")) {
+                    for (int i = 0; i < 3; i++) {
+                        for (int j = 0; j < 3; j++) {
+                            if (i != 1 || j != 1) {
+                                smallBoard[i][j].setText(playerSymbol);
+                                smallBoard[i][j].setBackground(Color.RED);
+                            }
+                            Thread.sleep(300);
+                        }
+                    }
                 }
+
+                Thread.sleep(300);
+
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        smallBoard[i][j].setText(playerSymbol);
+                        if (playerSymbol.equals("X")) {
+                            smallBoard[i][j].setBackground(Color.BLUE);
+                        } else if (playerSymbol.equals("O")) {
+                            smallBoard[i][j].setBackground(Color.RED);
+                        }
+                    }
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-        }
+        });
+
+        animationThread.start();
     }
+
 
     private void checkBoardWin() {
 
