@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
+import java.io.*;
 
 
 
@@ -44,10 +45,13 @@ public class TicTacToeUltimate extends gameWindow implements ActionListener {
             }
         });
         titleUpdateThread.start();
+
+        saveGame.addActionListener(e -> saveGame());
+        loadGame.addActionListener(e -> loadGame());
     }
 
     public void actionPerformed(ActionEvent e) {
-        JButton button = (JButton) e.getSource();
+        AbstractButton button = (AbstractButton) e.getSource();
 
         if (isBoardEnabled && button.getBackground() == Color.WHITE && button.isEnabled()) {
             resetSmallBoardsBackground();
@@ -340,6 +344,52 @@ public class TicTacToeUltimate extends gameWindow implements ActionListener {
         isBoardEnabled = true;
     }
 
+    private void saveGame() {
+        try (FileOutputStream fileOut = new FileOutputStream("saveBoard.ser");
+             ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+            out.writeObject(this);
+            System.out.println("Gra zapisana pomyślnie!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadGame() {
+        try (FileInputStream fileIn = new FileInputStream("saveBoard.ser");
+             ObjectInputStream in = new ObjectInputStream(fileIn)) {
+            TicTacToeUltimate savedGame = (TicTacToeUltimate) in.readObject();
+            currentPlayer = savedGame.currentPlayer;
+
+
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    for (int k = 0; k < 3; k++) {
+                        for (int l = 0; l < 3; l++) {
+                            smallBoards[i][j][k][l].setText(savedGame.smallBoards[i][j][k][l].getText());
+                            smallBoards[i][j][k][l].setBackground(savedGame.smallBoards[i][j][k][l].getBackground());
+                            smallBoards[i][j][k][l].removeActionListener(this); // Remove ActionListener
+                            smallBoards[i][j][k][l].addActionListener(this); // Register ActionListener
+                        }
+                    }
+                }
+            }
+
+            resetSmallBoardsBackground();
+
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    if (savedGame.mainBoard[i][j].getBackground().equals(Color.YELLOW)) {
+                        mainBoard[i][j].setBackground(Color.YELLOW);
+                        break;
+                    }
+                }
+            }
+
+            System.out.println("Gra załadowana pomyślnie!");
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
     public static void main(String[] args) {
         SwingUtilities.invokeLater(TicTacToeUltimate::new);
     }
