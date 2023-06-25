@@ -90,7 +90,6 @@ public class TicTacToeUltimate extends gameWindow implements ActionListener {
     private void checkWin(int mainRow, int mainCol, int subRow, int subCol) {
         String currentPlayerSymbol = getPlayerSymbol();
 
-        // Wiersze
         boolean rowWin = true;
         for (int row = 0; row < 3; row++) {
             if (smallBoards[mainRow][mainCol][row][subCol].getText().equals("")
@@ -108,7 +107,7 @@ public class TicTacToeUltimate extends gameWindow implements ActionListener {
             return;
         }
 
-        // Kolumny
+
         boolean colWin = true;
         for (int col = 0; col < 3; col++) {
             if (smallBoards[mainRow][mainCol][subRow][col].getText().equals("")
@@ -126,7 +125,7 @@ public class TicTacToeUltimate extends gameWindow implements ActionListener {
             return;
         }
 
-        // Diagonal "/"
+
         boolean diagWin = true;
         for (int i = 0; i < 3; i++) {
             if (smallBoards[mainRow][mainCol][i][i].getText().equals("")
@@ -144,7 +143,7 @@ public class TicTacToeUltimate extends gameWindow implements ActionListener {
             return;
         }
 
-        // Diagonal "\"
+
         boolean revDiagWin = true;
         for (int i = 0; i < 3; i++) {
             if (smallBoards[mainRow][mainCol][i][2 - i].getText().equals("")
@@ -174,7 +173,7 @@ public class TicTacToeUltimate extends gameWindow implements ActionListener {
     }
 
     private void checkBoardWin() {
-        // Wiesze
+
         for (int i = 0; i < 3; i++) {
             if (mainBoard[i][0].getText().equals("")) {
                 continue;
@@ -187,7 +186,7 @@ public class TicTacToeUltimate extends gameWindow implements ActionListener {
             }
         }
 
-        // Kolumny
+
         for (int j = 0; j < 3; j++) {
             if (mainBoard[0][j].getText().equals("")) {
                 continue;
@@ -200,7 +199,7 @@ public class TicTacToeUltimate extends gameWindow implements ActionListener {
             }
         }
 
-        // Diagonal "/"
+
         if (!mainBoard[0][0].getText().equals("") && mainBoard[0][0].getText().equals(mainBoard[1][1].getText())
                 && mainBoard[0][0].getText().equals(mainBoard[2][2].getText())) {
             highlightWinningCells(0, 0, 1, 1, 2, 2);
@@ -208,7 +207,7 @@ public class TicTacToeUltimate extends gameWindow implements ActionListener {
             return;
         }
 
-        // Diagonal "\"
+
         if (!mainBoard[0][2].getText().equals("") && mainBoard[0][2].getText().equals(mainBoard[1][1].getText())
                 && mainBoard[0][2].getText().equals(mainBoard[2][0].getText())) {
             highlightWinningCells(0, 2, 1, 1, 2, 0);
