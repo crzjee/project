@@ -360,14 +360,14 @@ public class TicTacToeUltimate extends gameWindow implements ActionListener {
             TicTacToeUltimate savedGame = (TicTacToeUltimate) in.readObject();
             currentPlayer = savedGame.currentPlayer;
 
-
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 3; j++) {
                     for (int k = 0; k < 3; k++) {
                         for (int l = 0; l < 3; l++) {
                             smallBoards[i][j][k][l].setText(savedGame.smallBoards[i][j][k][l].getText());
                             smallBoards[i][j][k][l].setBackground(savedGame.smallBoards[i][j][k][l].getBackground());
-                            smallBoards[i][j][k][l].addActionListener(this); // Register ActionListener
+                            smallBoards[i][j][k][l].addActionListener(this);
+                            smallBoards[i][j][k][l].setEnabled(true);
                         }
                     }
                 }
